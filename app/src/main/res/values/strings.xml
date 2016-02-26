@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Weather UPD</string>
+    <string name="утеук_сшен_ыекштп">Enter city</string>
+    <string name="temperature_text">температура</string>
+    <string name="temperature_feel_text">ощущается как</string>
+    <string name="pressure_text">давление</string>
+    <string name="windspeed_text">скорость ветра</string>
+    <string name="sunrise_text">восход/закат</string>
+    <string name="moonrise_text">лунный восход/закат</string>
+    <string name="humidity_text">влажность</string>
+    <string name="cloudcover_text">облачность</string>
+    <string name="precipMM_text">осадки мм</string>
+    <string name="WindGustKmph_еуче">порывы</string>
+    <string name="chanceofrain_text">дождь %</string>
+    <string name="chanceofsnow_text">снег %</string>
+    <string name="chanceoffog_text">туман %</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="button_settings_text">Set</string>
+    <string name="credit_text">World Weather Online</string>
+    <string name="notification_title_text">Weather</string>
+</resources>
