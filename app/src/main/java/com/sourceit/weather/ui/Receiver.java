@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.app.NotificationCompat;
 
 import com.sourceit.weather.R;
@@ -15,7 +16,9 @@ import com.sourceit.weather.utils.L;
  * Created by User on 26.02.2016.
  */
 public class Receiver extends BroadcastReceiver {
+
     Context context;
+    Resources res = context.getResources();
     private final int ID = 0;
 
     @Override
@@ -30,7 +33,7 @@ public class Receiver extends BroadcastReceiver {
         builder.setContentIntent(contentIntent)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(context.getString(R.string.notification_title_text))
-                .setContentText(String.format("%s %s", MainActivity.sp.getString(MainActivity.CITY, MainActivity.KHARKOV), MainActivity.currentTemp));
+                .setContentText(String.format("%s %s", MainActivity.sp.getString(res.getString(R.string.city), res.getString(R.string.kharkov)), MainActivity.currentTemp));
         Notification n = builder.build();
         nm.notify(ID, n);
     }

@@ -1,5 +1,6 @@
 package com.sourceit.weather.ui;
 
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sourceit.weather.App;
 import com.sourceit.weather.R;
 import com.sourceit.weather.ui.WeatherSystem.Weather;
 import com.squareup.picasso.Picasso;
@@ -17,6 +19,8 @@ import java.util.ArrayList;
  * Created by User on 24.02.2016.
  */
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> implements View.OnClickListener {
+
+    Resources res = App.getApp().getResources();
 
     private ArrayList<Weather> objects;
     private OnItemClickWatcher<Weather> watcher;
@@ -35,13 +39,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        holder.pressure.setText(String.format("%s %s", objects.get(position).hourly.get(MainActivity.FIRST).pressure, MainActivity.PRESSURE_VALUE));
-        if (!MainActivity.sp.getBoolean(MainActivity.DEGREESSET, false)) {
-            holder.temperatureFeel.setText(String.format("%s%s", objects.get(position).hourly.get(MainActivity.FIRST).FeelsLikeC, MainActivity.C));
-            holder.temperature.setText(String.format("%s%s", objects.get(position).hourly.get(MainActivity.FIRST).tempC, MainActivity.C));
+        holder.pressure.setText(String.format("%s %s", objects.get(position).hourly.get(MainActivity.FIRST).pressure, res.getString(R.string.pressure_value)));
+        if (!MainActivity.sp.getBoolean(res.getString(R.string.degreesset), false)) {
+            holder.temperatureFeel.setText(String.format("%s%s", objects.get(position).hourly.get(MainActivity.FIRST).FeelsLikeC, res.getString(R.string.c)));
+            holder.temperature.setText(String.format("%s%s", objects.get(position).hourly.get(MainActivity.FIRST).tempC, res.getString(R.string.c)));
         } else {
-            holder.temperatureFeel.setText(String.format("%s%s", objects.get(position).hourly.get(MainActivity.FIRST).FeelsLikeF, MainActivity.F));
-            holder.temperature.setText(String.format("%s%s", objects.get(position).hourly.get(MainActivity.FIRST).tempF, MainActivity.F));
+            holder.temperatureFeel.setText(String.format("%s%s", objects.get(position).hourly.get(MainActivity.FIRST).FeelsLikeF, res.getString(R.string.f)));
+            holder.temperature.setText(String.format("%s%s", objects.get(position).hourly.get(MainActivity.FIRST).tempF, res.getString(R.string.f)));
         }
         holder.weatherDesc.setText(objects.get(position).hourly.get(MainActivity.FIRST).lang_ru.get(MainActivity.FIRST).value);
         holder.date.setText(objects.get(position).date);

@@ -12,14 +12,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/entercity"
-        android:hint="@string/утеук_сшен_ыекштп"
+        android:hint="@string/enter_city"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Apply"
+        android:text="@string/option_apply"
         android:id="@+id/button_apply"
         android:layout_below="@+id/entercity"
         android:layout_centerHorizontal="true" />
@@ -27,7 +27,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="F SET"
+        android:text="@string/option_f_set"
         android:id="@+id/button_fset"
         android:layout_below="@+id/button_apply"
         android:layout_toLeftOf="@+id/entercity"
@@ -36,7 +36,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="C SET"
+        android:text="@string/option_c_set"
         android:id="@+id/button_cset"
         android:layout_alignTop="@+id/button_fset"
         android:layout_toRightOf="@+id/button_apply"
@@ -45,7 +45,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Update"
+        android:text="@string/option_update"
         android:id="@+id/button_update"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
@@ -54,7 +54,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Back"
+        android:text="@string/option_back"
         android:id="@+id/button_back"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"

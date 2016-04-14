@@ -1,18 +1,32 @@
 package com.sourceit.weather.ui;
 
+import android.content.res.Resources;
+
+import com.sourceit.weather.App;
+import com.sourceit.weather.R;
 import com.sourceit.weather.ui.WeatherSystem.WeatherSystem;
-import com.sourceit.weather.utils.L;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.http.GET;
-import retrofit.http.Path;
+import retrofit.http.Query;
 
 /**
  * Created by Aleksey on 22.02.2016.
  */
 public class Retrofit {
-    private static String ENDPOINT = "http://api.worldweatheronline.com/free/v2";
+
+    static Resources res = App.getApp().getResources();
+
+    public static final String Q = "q";
+    public static final String FORMAT = "format";
+    public static final String NUM_OF_DAYS = "num_of_days";
+    public static final String TP = "tp";
+    public static final String LANG = "lang";
+    public static final String KEY = "key";
+    public static final String HTTP_API_WORLDWEATHERONLINE_COM_FREE_V2 = "http://api.worldweatheronline.com/free/v2";
+
+    private static String ENDPOINT = HTTP_API_WORLDWEATHERONLINE_COM_FREE_V2;
     private static ApiInterface apiInterface;
 
     static {
@@ -20,8 +34,16 @@ public class Retrofit {
     }
 
     interface ApiInterface {
-        @GET("/{city}")
-        void getData(@Path(value = "city", encode = false) String name, Callback<WeatherSystem> dataCallback);
+
+        @GET("/weather.ashx")
+        void getData(
+                @Query(Q) String city,
+                @Query(FORMAT) String format,
+                @Query(NUM_OF_DAYS) int num_of_days,
+                @Query(TP) int tp,
+                @Query(LANG) String lang,
+                @Query(KEY) String key,
+                Callback<WeatherSystem> dataCallback);
     }
 
     public static void init() {
@@ -33,7 +55,6 @@ public class Retrofit {
     }
 
     public static void getData(String city, Callback<WeatherSystem> dataCallback) {
-        apiInterface.getData("weather.ashx?q=" + city + "&format=json&num_of_days=5&tp=24&lang=ru&key=306851eef2772c27ce397089ae388", dataCallback);
-        L.d("format url: " + "weather.ashx?q=" + city + "&format=json&num_of_days=5&tp=24&lang=ru&key=306851eef2772c27ce397089ae388");
+        apiInterface.getData(city, res.getString(R.string.retrofit_json), 5, 24, res.getString(R.string.retrofit_ru), res.getString(R.string.retrofit_key), dataCallback);
     }
 }

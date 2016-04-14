@@ -3,6 +3,7 @@ package com.sourceit.weather.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.sourceit.weather.App;
 import com.sourceit.weather.R;
 import com.sourceit.weather.ui.WeatherSystem.Weather;
 import com.sourceit.weather.ui.WeatherSystem.WeatherSystem;
@@ -36,19 +38,8 @@ import retrofit.client.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String C = "\u2103";
-    public static final String F = "\u2109";
-    public static final String DEGREESSET = "degreesset";
-    public static final String JSON_WEATHER = "json_weather";
-    public static final String SAVEDDAY = "savedday";
-    public static final String SAVEDMONTH = "savedmonth";
-    public static final String SAVEDYEAR = "savedyear";
-    public static final String WRITE = "write";
-    public static final String READ = "read";
-    public static final String CHANGE = "change";
-    public static final String KHARKOV = "Kharkov";
-    public static final String CITY = "city";
-    public static final String MY_CUSTOM_INTENT = "my.custom.INTENT";
+    Resources res = App.getApp().getResources();
+    public final String MY_CUSTOM_INTENT = res.getString(R.string.my_custom_intent);
 
     private WeatherSystem localWeatherSystem;
     public static String currentTemp;
@@ -73,9 +64,6 @@ public class MainActivity extends AppCompatActivity {
     TextView fog;
 
     public static final int FIRST = 0;
-    public static final String PRESSURE_VALUE = "гПа";
-    public static final String KMPH = "км/ч";
-    public static final String MM = "мм";
     public static SharedPreferences sp;
     public static SharedPreferences.Editor editor;
 
@@ -86,11 +74,11 @@ public class MainActivity extends AppCompatActivity {
     private boolean paused;
 
     private void setRetrofit() {
-        L.d("retrofit with city: " + sp.getString(CITY, ""));
-        if (sp.getString(CITY, "").equals("")) {
-            retrofit(KHARKOV);
+        L.d("retrofit with city: " + sp.getString(res.getString(R.string.city), ""));
+        if (sp.getString(res.getString(R.string.city), "").equals("")) {
+            retrofit(res.getString(R.string.kharkov));
         } else {
-            retrofit(sp.getString(CITY, ""));
+            retrofit(sp.getString(res.getString(R.string.city), ""));
         }
     }
 
@@ -109,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        L.d("file existance: " + fileExistance(JSON_WEATHER));
+        L.d("file existance: " + fileExistance(res.getString(R.string.json_weather)));
     }
 
     @Override
@@ -118,23 +106,23 @@ public class MainActivity extends AppCompatActivity {
         L.d("onResume");
         L.d("paused: " + paused);
         L.d("current year: " + calendar.get(Calendar.YEAR));
-        L.d("saved year: " + sp.getInt(SAVEDYEAR, 0));
+        L.d("saved year: " + sp.getInt(res.getString(R.string.savedyear), 0));
         L.d("current day: " + calendar.get(Calendar.DAY_OF_MONTH));
-        L.d("saved day: " + sp.getInt(SAVEDDAY, 0));
+        L.d("saved day: " + sp.getInt(res.getString(R.string.savedday), 0));
         L.d("current month: " + calendar.get(Calendar.MONTH));
-        L.d("saved month: " + sp.getInt(SAVEDMONTH, 0));
-        if (!fileExistance(JSON_WEATHER) || sp.getInt(SAVEDMONTH, 0) != calendar.get(Calendar.MONTH)
-                || sp.getInt(SAVEDDAY, 0) != calendar.get(Calendar.DAY_OF_MONTH) || sp.getInt(SAVEDYEAR, 0) != calendar.get(Calendar.YEAR)) {
+        L.d("saved month: " + sp.getInt(res.getString(R.string.savedmonth), 0));
+        if (!fileExistance(res.getString(R.string.json_weather)) || sp.getInt(res.getString(R.string.savedmonth), 0) != calendar.get(Calendar.MONTH)
+                || sp.getInt(res.getString(R.string.savedday), 0) != calendar.get(Calendar.DAY_OF_MONTH) || sp.getInt(res.getString(R.string.savedyear), 0) != calendar.get(Calendar.YEAR)) {
             setRetrofit();
         } else {
             if (!paused) {
-                if (sp.getBoolean(SettingsActivity.UPDATE, false)) {
+                if (sp.getBoolean(res.getString(R.string.update), false)) {
                     L.d("update state true");
-                    editor.putBoolean(SettingsActivity.UPDATE, false);
+                    editor.putBoolean(res.getString(R.string.update), false);
                     editor.apply();
                     setRetrofit();
-                } else if (sp.getBoolean(CHANGE, false)) {
-                    editor.putBoolean(CHANGE, false);
+                } else if (sp.getBoolean(res.getString(R.string.change), false)) {
+                    editor.putBoolean(res.getString(R.string.change), false);
                     editor.apply();
                     setRetrofit();
                 } else {
@@ -210,12 +198,12 @@ public class MainActivity extends AppCompatActivity {
                     }
                     saveFile();
 
-                    editor.putInt(SAVEDDAY, calendar.get(Calendar.DAY_OF_MONTH));
-                    editor.putInt(SAVEDMONTH, calendar.get(Calendar.MONTH));
-                    editor.putInt(SAVEDYEAR, calendar.get(Calendar.YEAR));
+                    editor.putInt(res.getString(R.string.savedday), calendar.get(Calendar.DAY_OF_MONTH));
+                    editor.putInt(res.getString(R.string.savedmonth), calendar.get(Calendar.MONTH));
+                    editor.putInt(res.getString(R.string.savedyear), calendar.get(Calendar.YEAR));
                     editor.apply();
                 } else {
-                    Toast.makeText(getApplicationContext(), "enter correct city in english!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.enter_correct_city_in_english, Toast.LENGTH_LONG).show();
                     startActivity(intent);
                     finish();
                 }
@@ -223,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getApplicationContext(), "error downloading from server", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.error_downloading_from_server, Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -244,27 +232,27 @@ public class MainActivity extends AppCompatActivity {
 
         weatherDesc.setText(localWeatherSystem.data.weather.get(value).hourly.get(FIRST).lang_ru.get(FIRST).value);
 
-        if (sp.getBoolean(DEGREESSET, false)) {
-            temperature.setText(String.format("%s%s", localWeatherSystem.data.weather.get(value).hourly.get(FIRST).tempF, F));
-            temperatureFeel.setText(String.format("%s%s", localWeatherSystem.data.weather.get(value).hourly.get(FIRST).FeelsLikeF, F));
+        if (sp.getBoolean(res.getString(R.string.degreesset), false)) {
+            temperature.setText(String.format("%s%s", localWeatherSystem.data.weather.get(value).hourly.get(FIRST).tempF, res.getString(R.string.f)));
+            temperatureFeel.setText(String.format("%s%s", localWeatherSystem.data.weather.get(value).hourly.get(FIRST).FeelsLikeF, res.getString(R.string.f)));
             currentTemp = temperature.getText().toString();
             sendMessage();
         } else {
-            temperature.setText(String.format("%s%s", localWeatherSystem.data.weather.get(value).hourly.get(FIRST).tempC, C));
-            temperatureFeel.setText(String.format("%s%s", localWeatherSystem.data.weather.get(value).hourly.get(FIRST).FeelsLikeC, C));
+            temperature.setText(String.format("%s%s", localWeatherSystem.data.weather.get(value).hourly.get(FIRST).tempC, res.getString(R.string.c)));
+            temperatureFeel.setText(String.format("%s%s", localWeatherSystem.data.weather.get(value).hourly.get(FIRST).FeelsLikeC, res.getString(R.string.c)));
             currentTemp = temperature.getText().toString();
             sendMessage();
         }
-        pressure.setText(String.format("%s %s", localWeatherSystem.data.weather.get(value).hourly.get(FIRST).pressure, PRESSURE_VALUE));
-        windSpeed.setText(String.format("%s %s", localWeatherSystem.data.weather.get(value).hourly.get(FIRST).windspeedKmph, KMPH));
+        pressure.setText(String.format("%s %s", localWeatherSystem.data.weather.get(value).hourly.get(FIRST).pressure, res.getString(R.string.pressure_value)));
+        windSpeed.setText(String.format("%s %s", localWeatherSystem.data.weather.get(value).hourly.get(FIRST).windspeedKmph, res.getString(R.string.kmph)));
         sunriseSunset.setText(localWeatherSystem.data.weather.get(value).astronomy.get(FIRST).sunrise
                 + " - " + localWeatherSystem.data.weather.get(value).astronomy.get(FIRST).sunset);
         moonriseMoonset.setText(localWeatherSystem.data.weather.get(value).astronomy.get(FIRST).moonrise
                 + " - " + localWeatherSystem.data.weather.get(value).astronomy.get(FIRST).moonset);
         humidity.setText(localWeatherSystem.data.weather.get(value).hourly.get(FIRST).humidity + "%");
         cloudcover.setText(localWeatherSystem.data.weather.get(value).hourly.get(FIRST).cloudcover + "%");
-        precipMM.setText(String.format("%s %s", localWeatherSystem.data.weather.get(value).hourly.get(FIRST).precipMM, MM));
-        windgustkmph.setText(String.format("%s %s", localWeatherSystem.data.weather.get(value).hourly.get(FIRST).WindGustKmph, KMPH));
+        precipMM.setText(String.format("%s %s", localWeatherSystem.data.weather.get(value).hourly.get(FIRST).precipMM, res.getString(R.string.mm)));
+        windgustkmph.setText(String.format("%s %s", localWeatherSystem.data.weather.get(value).hourly.get(FIRST).WindGustKmph, res.getString(R.string.kmph)));
         Picasso.with(this).load(localWeatherSystem.data.weather.get(value).hourly.get(FIRST).weatherIconUrl.get(FIRST).value)
                 .placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(icon);
         rain.setText(localWeatherSystem.data.weather.get(value).hourly.get(FIRST).chanceofrain + "%");
@@ -273,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveFile() {
-        new MyAsyncTask().execute(WRITE);
+        new MyAsyncTask().execute(res.getString(R.string.write));
     }
 
     private boolean fileExistance(String fname) {
@@ -282,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void readFile() {
-        new MyAsyncTask().execute(READ);
+        new MyAsyncTask().execute(res.getString(R.string.read));
     }
 
     private class MyAsyncTask extends AsyncTask<String, Void, Void> {
@@ -290,23 +278,23 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(String... params) {
-            if (params[0].equals(WRITE)) {
+            if (params[0].equals(res.getString(R.string.write))) {
                 L.d("WRITE");
                 try {
                     String jsonWeather = gson.toJson(localWeatherSystem);
-                    FileOutputStream fos = openFileOutput(JSON_WEATHER, Context.MODE_PRIVATE);
+                    FileOutputStream fos = openFileOutput(res.getString(R.string.json_weather), Context.MODE_PRIVATE);
                     fos.write(jsonWeather.getBytes());
                     fos.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-            } else if (params[0].equals(READ)) {
+            } else if (params[0].equals(res.getString(R.string.read))) {
                 L.d("READ");
                 setAdapter = true;
                 localWeatherSystem = new WeatherSystem();
                 try {
-                    FileInputStream fis = openFileInput(JSON_WEATHER);
+                    FileInputStream fis = openFileInput(res.getString(R.string.json_weather));
                     BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
                     StringBuilder text = new StringBuilder();
                     String line;

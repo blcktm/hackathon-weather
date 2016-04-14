@@ -1,6 +1,7 @@
 package com.sourceit.weather.ui;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -8,12 +9,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.sourceit.weather.App;
 import com.sourceit.weather.R;
 import com.sourceit.weather.utils.L;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    public static final String UPDATE = "update";
+    Resources res = App.getApp().getResources();
 
     Button degreesSetC;
     Button degreesSetF;
@@ -42,10 +44,10 @@ public class SettingsActivity extends AppCompatActivity {
         degreesSetC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (MainActivity.sp.getBoolean(MainActivity.DEGREESSET, false)) {
-                    MainActivity.editor.putBoolean(MainActivity.DEGREESSET, false);
+                if (MainActivity.sp.getBoolean(res.getString(R.string.degreesset), false)) {
+                    MainActivity.editor.putBoolean(res.getString(R.string.degreesset), false);
                     MainActivity.editor.apply();
-                    L.d("degrees state in settings: " + MainActivity.sp.getBoolean(MainActivity.DEGREESSET, false));
+                    L.d("degrees state in settings: " + MainActivity.sp.getBoolean(res.getString(R.string.degreesset), false));
                 }
             }
         });
@@ -53,10 +55,10 @@ public class SettingsActivity extends AppCompatActivity {
         degreesSetF.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!MainActivity.sp.getBoolean(MainActivity.DEGREESSET, false)) {
-                    MainActivity.editor.putBoolean(MainActivity.DEGREESSET, true);
+                if (!MainActivity.sp.getBoolean(res.getString(R.string.degreesset), false)) {
+                    MainActivity.editor.putBoolean(res.getString(R.string.degreesset), true);
                     MainActivity.editor.apply();
-                    L.d("degrees state in settings: " + MainActivity.sp.getBoolean(MainActivity.DEGREESSET, false));
+                    L.d("degrees state in settings: " + MainActivity.sp.getBoolean(res.getString(R.string.degreesset), false));
                 }
             }
         });
@@ -64,11 +66,11 @@ public class SettingsActivity extends AppCompatActivity {
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!MainActivity.sp.getBoolean(UPDATE, false)) {
-                    MainActivity.editor.putBoolean(UPDATE, true);
+                if (!MainActivity.sp.getBoolean(res.getString(R.string.update), false)) {
+                    MainActivity.editor.putBoolean(res.getString(R.string.update), true);
                     MainActivity.editor.apply();
                 }
-                Toast.makeText(getApplicationContext(), "update after BACK", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.update_after_back, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -77,17 +79,17 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 try {
-                    if (!MainActivity.sp.getBoolean(MainActivity.CHANGE, false)) {
-                        MainActivity.editor.putBoolean(MainActivity.CHANGE, true);
+                    if (!MainActivity.sp.getBoolean(res.getString(R.string.change), false)) {
+                        MainActivity.editor.putBoolean(res.getString(R.string.change), true);
                     }
                     String cityText = city.getText().toString().substring(0, 1).toUpperCase() + city.getText().toString().substring(1, city.getText().length()).toLowerCase();
-                    MainActivity.editor.putString(MainActivity.CITY, cityText);
+                    MainActivity.editor.putString(res.getString(R.string.city), cityText);
                     MainActivity.editor.apply();
                     L.d("city: " + cityText);
-                    Toast.makeText(getApplicationContext(), "change after BACK", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.change_after_back, Toast.LENGTH_LONG).show();
                     city.setText("");
                 } catch (IndexOutOfBoundsException e) {
-                    Toast.makeText(getApplicationContext(), "enter text!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.enter_text, Toast.LENGTH_LONG).show();
                 }
             }
         });

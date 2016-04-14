@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Weather UPD</string>
-    <string name="утеук_сшен_ыекштп">Enter city</string>
+    <string name="enter_city">Enter city</string>
     <string name="temperature_text">температура</string>
     <string name="temperature_feel_text">ощущается как</string>
     <string name="pressure_text">давление</string>
@@ -18,4 +18,34 @@
     <string name="button_settings_text">Set</string>
     <string name="credit_text">World Weather Online</string>
     <string name="notification_title_text">Weather</string>
+    <string name="error_downloading_from_server">error downloading from server</string>
+    <string name="enter_correct_city_in_english">enter correct city in english!</string>
+    <string name="mm">мм</string>
+    <string name="kmph">км/ч</string>
+    <string name="pressure_value">гПа</string>
+    <string name="c">℃</string>
+    <string name="f">℉</string>
+    <string name="degreesset">degreesset</string>
+    <string name="json_weather">json_weather</string>
+    <string name="savedday">savedday</string>
+    <string name="savedmonth">savedmonth</string>
+    <string name="savedyear">savedyear</string>
+    <string name="write">write</string>
+    <string name="read">read</string>
+    <string name="change">change</string>
+    <string name="kharkov">Kharkov</string>
+    <string name="city">city</string>
+    <string name="my_custom_intent">my.custom.INTENT</string>
+    <string name="update">update</string>
+    <string name="update_after_back">update after BACK</string>
+    <string name="change_after_back">change after BACK</string>
+    <string name="enter_text">enter text!</string>
+    <string name="retrofit_key">306851eef2772c27ce397089ae388</string>
+    <string name="retrofit_ru">ru</string>
+    <string name="retrofit_json">json</string>
+    <string name="option_apply">Apply</string>
+    <string name="option_f_set">F SET</string>
+    <string name="option_c_set">C SET</string>
+    <string name="option_update">Update</string>
+    <string name="option_back">Back</string>
 </resources>
