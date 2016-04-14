@@ -38,8 +38,8 @@ import retrofit.client.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    Resources res = App.getApp().getResources();
-    public final String MY_CUSTOM_INTENT = res.getString(R.string.my_custom_intent);
+    private Resources res = App.getApp().getResources();
+    private final String MY_CUSTOM_INTENT = res.getString(R.string.my_custom_intent);
 
     private WeatherSystem localWeatherSystem;
     public static String currentTemp;
