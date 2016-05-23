@@ -14,7 +14,7 @@ import com.sourceit.weather.R;
 import com.sourceit.weather.utils.L;
 
 /**
- * Created by User on 26.02.2016.
+ * Created by ${blcktm} on 26.02.2016.
  */
 public class Receiver extends BroadcastReceiver {
 
