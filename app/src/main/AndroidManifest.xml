@@ -27,7 +27,7 @@
             android:name=".ui.Receiver"
             android:enabled="true">
             <intent-filter>
-                <action android:name="@string/my_custom_intent" />
+                <action android:name="my.custom.INTENT" />
             </intent-filter>
         </receiver>
     </application>

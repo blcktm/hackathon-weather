@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.app.NotificationCompat;
 
+import com.sourceit.weather.App;
 import com.sourceit.weather.R;
 import com.sourceit.weather.utils.L;
 
@@ -17,8 +18,7 @@ import com.sourceit.weather.utils.L;
  */
 public class Receiver extends BroadcastReceiver {
 
-    Context context;
-    Resources res = context.getResources();
+    Resources res = App.getApp().getResources();
     private final int ID = 0;
 
     @Override
