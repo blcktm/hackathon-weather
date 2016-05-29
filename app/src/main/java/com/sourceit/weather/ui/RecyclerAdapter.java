@@ -15,6 +15,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by User on 24.02.2016.
  */
@@ -64,21 +67,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView weatherDesc;
-        private TextView temperature;
-        private TextView temperatureFeel;
-        private TextView pressure;
-        private ImageView icon;
-        private TextView date;
+        @BindView(R.id.weatherDesc_inlist)
+        TextView weatherDesc;
+        @BindView(R.id.temperature_value_inlist)
+        TextView temperature;
+        @BindView(R.id.temperature_feel_value_inlist)
+        TextView temperatureFeel;
+        @BindView(R.id.pressure_value_inlist)
+        TextView pressure;
+        @BindView(R.id.icon_for_list)
+        ImageView icon;
+        @BindView(R.id.date_inlist)
+        TextView date;
 
         public ViewHolder(View item, final OnItemClickWatcher<Weather> watcher, final ArrayList<Weather> objects) {
             super(item);
-            weatherDesc = (TextView) item.findViewById(R.id.weatherDesc_inlist);
-            temperature = (TextView) item.findViewById(R.id.temperature_value_inlist);
-            temperatureFeel = (TextView) item.findViewById(R.id.temperature_feel_value_inlist);
-            pressure = (TextView) item.findViewById(R.id.pressure_value_inlist);
-            date = (TextView) item.findViewById(R.id.date_inlist);
-            icon = (ImageView) item.findViewById(R.id.icon_for_list);
+            ButterKnife.bind(this, item);
 
             item.setOnClickListener(new View.OnClickListener() {
                 @Override

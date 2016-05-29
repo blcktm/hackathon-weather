@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +31,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Calendar;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -44,30 +46,52 @@ public class MainActivity extends AppCompatActivity {
     private WeatherSystem localWeatherSystem;
     public static String currentTemp;
 
-    private RecyclerView weatherList;
     private LinearLayoutManager linearLayoutManagerl;
 
+    @BindView(R.id.weather_recyclerlist)
+    RecyclerView weatherList;
+
+    @OnClick(R.id.button_settings)
+    public void buttonSettings() {
+        startActivity(intent);
+        finish();
+    }
+
+    @BindView(R.id.weatherDesc)
     TextView weatherDesc;
+    @BindView(R.id.temperature_value)
     TextView temperature;
+    @BindView(R.id.temperature_feel_value)
     TextView temperatureFeel;
+    @BindView(R.id.pressure_value)
     TextView pressure;
+    @BindView(R.id.windspeed_value)
     TextView windSpeed;
+    @BindView(R.id.sunrise_and_sunset_value)
     TextView sunriseSunset;
+    @BindView(R.id.moonrise_and_moonset_value)
     TextView moonriseMoonset;
+    @BindView(R.id.humidity_value)
     TextView humidity;
+    @BindView(R.id.cloudcover_value)
     TextView cloudcover;
+    @BindView(R.id.precipmm_value)
     TextView precipMM;
+    @BindView(R.id.windgustkmph_value)
     TextView windgustkmph;
+    @BindView(R.id.icon)
     ImageView icon;
+    @BindView(R.id.chanceofrain_value)
     TextView rain;
+    @BindView(R.id.chanceofsnow_value)
     TextView snow;
+    @BindView(R.id.chanceoffog_value)
     TextView fog;
 
     public static final int FIRST = 0;
     public static SharedPreferences sp;
     public static SharedPreferences.Editor editor;
 
-    private Button settings;
     private Intent intent;
     private Gson gson;
     private Calendar calendar;
@@ -86,16 +110,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
         init();
-
-        settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(intent);
-                finish();
-            }
-        });
 
         L.d("file existance: " + fileExistance(res.getString(R.string.json_weather)));
     }
@@ -143,27 +160,9 @@ public class MainActivity extends AppCompatActivity {
         sp = getPreferences(Context.MODE_PRIVATE);
         editor = sp.edit();
 
-        weatherList = (RecyclerView) findViewById(R.id.weather_recyclerlist);
         linearLayoutManagerl = new LinearLayoutManager(this);
         weatherList.setLayoutManager(linearLayoutManagerl);
 
-        weatherDesc = (TextView) findViewById(R.id.weatherDesc);
-        temperature = (TextView) findViewById(R.id.temperature_value);
-        temperatureFeel = (TextView) findViewById(R.id.temperature_feel_value);
-        pressure = (TextView) findViewById(R.id.pressure_value);
-        windSpeed = (TextView) findViewById(R.id.windspeed_value);
-        sunriseSunset = (TextView) findViewById(R.id.sunrise_and_sunset_value);
-        moonriseMoonset = (TextView) findViewById(R.id.moonrise_and_moonset_value);
-        humidity = (TextView) findViewById(R.id.humidity_value);
-        cloudcover = (TextView) findViewById(R.id.cloudcover_value);
-        precipMM = (TextView) findViewById(R.id.precipmm_value);
-        windgustkmph = (TextView) findViewById(R.id.windgustkmph_value);
-        icon = (ImageView) findViewById(R.id.icon);
-        rain = (TextView) findViewById(R.id.chanceofrain_value);
-        snow = (TextView) findViewById(R.id.chanceofsnow_value);
-        fog = (TextView) findViewById(R.id.chanceoffog_value);
-
-        settings = (Button) findViewById(R.id.button_settings);
         intent = new Intent(this, SettingsActivity.class);
         gson = new Gson();
         calendar = Calendar.getInstance();
